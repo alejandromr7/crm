@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const db = require('./db/config');
 
 class Server {
     constructor() {
@@ -9,6 +10,17 @@ class Server {
         this.middlewares();
         this.routes();
         this.listen();
+        this.dbConnection();
+    }
+
+    async dbConnection() {
+        try {
+            require('./models/Clientes');
+            await db.sync();
+            //console.log('Connection has been established successfully.');
+        } catch (error) {
+            console.error('Unable to connect to the database:', error);
+        }
     }
 
     middlewares() {
