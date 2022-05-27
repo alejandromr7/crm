@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const db = require('./db/config');
+const path = require('path')
 
 class Server {
     constructor() {
@@ -24,9 +25,14 @@ class Server {
     }
 
     middlewares() {
+
         this.app.use(cors());
         this.app.use(express.json());
         this.app.use(express.static('public'));
+        // this.app.get('*', (req, res) => {
+        //     res.sendFile('public/index.html', { root: __dirname });
+        // });
+
     }
 
     routes() {

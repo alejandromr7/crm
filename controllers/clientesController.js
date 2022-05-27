@@ -1,7 +1,19 @@
 const Clientes = require("../models/Clientes");
 
 const consultarClientes = async (req, res) => {
-    const cliente = await Clientes.findOne({ where: { email: req.body.email } });
+    const clientes = await Clientes.findAll();
+    res.json(clientes);
+}
+
+const consultarCliente = async (req, res) => {
+    const { id } = req.params;
+    const cliente = await Clientes.findByPk(id)
+
+    if (!cliente) {
+        res.json({ msg: 'No hay coincidencias para este cliente', error: true });
+        return;
+    }
+
     res.json(cliente);
 }
 
@@ -61,6 +73,7 @@ const eliminarCliente = async (req, res) => {
 
 module.exports = {
     consultarClientes,
+    consultarCliente,
     crearCliente,
     actualizarCliente,
     eliminarCliente
